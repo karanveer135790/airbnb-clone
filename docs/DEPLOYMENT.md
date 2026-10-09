@@ -16,7 +16,8 @@ docker compose up -d
 Open http://localhost:3000. Only the frontend is exposed, on the host's loopback
 interface. Next.js reaches FastAPI at `http://backend:8000` inside the private
 Compose network. The backend uses a named `airbnb-data` volume at `/data`.
-The seed exits without modifications when application data already exists.
+Existing data is kept. Startup repairs only recognized original demo photo arrays;
+custom host photos and booking records are preserved.
 
 ```bash
 docker compose ps
@@ -99,5 +100,5 @@ were checked without Docker; this is not a substitute for a container build/run.
 - Backend start command: `sh -c 'python seed.py && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1'`.
 - Backend volume: 500 MB mounted at `/data`; `DATABASE_URL=sqlite:////data/airbnb.db`.
 - `RAILWAY_RUN_UID=0` on the backend permits writing the root-owned Railway volume.
-- Seeding creates demo data only on an empty database. Subsequent starts repair exact original mixed-photo galleries; host-edited photos and bookings are preserved.
+- Seeding creates demo data only on an empty database. Each demo listing has five distinct photos from its own credited property source. Subsequent starts repair only exact recognized legacy demo photo arrays; host-edited galleries and bookings are preserved.
 - Both services track the GitHub `main` branch. The backend uses private networking.

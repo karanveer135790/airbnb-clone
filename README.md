@@ -65,9 +65,12 @@ DATABASE_URL=sqlite:////absolute/path/demo.db uvicorn app.main:app --port 8000
 ### Seed data and demo accounts
 
 `python seed.py` creates tables and inserts 4 users, 12 listings, 24 bookings,
-12 reviews and 3 wishlist entries. Every listing has five Unsplash photo URLs,
-location, amenities, rules, capacity and fees. Each has a past reviewed stay and a
-future reservation. Relative seed dates make the demo usable when first installed.
+12 reviews and 3 wishlist entries. Every demo home has five photographs selected
+from one source property, with 60 distinct image URLs and content hashes across all
+12 galleries. Locations, amenities, rules, capacity and fees are seeded too. Each
+home has a past reviewed stay and a future reservation. Relative seed dates make
+the demo usable when first installed. Photo sources and credits are listed in
+`backend/app/demo_galleries.json`.
 
 | Fresh DB user ID | Name | Role |
 | --- | --- | --- |
@@ -80,8 +83,10 @@ Use the profile menu to switch accounts. Hosting also offers host-account select
 `GET /api/demo/users` is the authoritative list of IDs. Hosts can book other hosts'
 homes. The initial browser identity is the first guest; the choice persists locally.
 
-The seed is non-destructive: if any application table contains data, it exits
-without changes. It takes a write lock and commits the entire seed transaction.
+The seed does not recreate existing application data. On startup it upgrades only
+exactly recognized original demo photo arrays to the curated, property-specific
+galleries; custom host photos and bookings are preserved. It takes a write lock
+while seeding or repairing.
 Use a new `DATABASE_URL` for a fresh dataset. For repeatable dates:
 
 ```bash
@@ -394,9 +399,10 @@ SQLite is stored on a persistent backend volume. See `docs/DEPLOYMENT.md` for co
 - Payments, messaging, identity verification, Experiences, support and reporting are
   placeholders. No real card data or money is processed.
 - Photos use supplied URLs; there is no image-upload/cloud-storage integration.
-  Demo homes have one explicitly assigned illustrative cover; galleries never borrow
-  unrelated images to fill slots. Hosts can supply 1–30 photos of their own property.
-  Startup repairs only exact legacy seed galleries and preserves host-edited photos.
+  Each demo home has five illustrative photos selected from one credited property
+  source; no photo is shared between the 12 demo galleries. Hosts can supply 1–30
+  photos of their own property. Startup repairs only exact legacy seed galleries
+  and preserves host-edited photos.
 - Listing maps use a fixed OpenStreetMap raster-tile viewport with attribution and
   an error fallback, not live-price pins. Explore's map button is a destination
   shortcut placeholder. Tile policy: https://operations.osmfoundation.org/policies/tiles/.

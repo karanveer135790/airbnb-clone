@@ -11,6 +11,7 @@ from sqlalchemy.orm import sessionmaker
 from app.database import get_db, configure_sqlite
 from app.main import app
 from app.models import Booking, Review, Listing
+from app.demo_photos import GALLERIES, gallery_photos
 from seed import seed, LEGACY_PHOTOS, COVER_PHOTOS, DUPLICATE_COVERS, photo_url
 
 class APITests(unittest.TestCase):
@@ -52,7 +53,7 @@ class APITests(unittest.TestCase):
             with patch('seed.engine', self.engine), patch('seed.SessionLocal', self.sessions):
                 seed(date.today())
         with self.sessions() as db:
-            self.assertEqual(db.get(Listing, 6).photos, [photo_url(COVER_PHOTOS['Ubud'])])
+            self.assertEqual(db.get(Listing, 6).photos, gallery_photos('Ubud'))
             self.assertEqual(db.get(Listing, 1).photos, custom)
             self.assertEqual([(b.id, b.listing_id, b.total_cents) for b in db.scalars(select(Booking))], before)
 
@@ -76,6 +77,34 @@ class APITests(unittest.TestCase):
         with self.sessions() as db:
             photos = [row.photos[0] for row in db.scalars(select(Listing))]
             self.assertEqual(len(photos), len(set(photos)))
+
+    def test_full_galleries_are_unique_and_from_separate_properties(self):
+        urls, hashes, sources = [], [], []
+        with self.sessions() as db:
+            for listing in db.scalars(select(Listing)):
+                gallery = GALLERIES[listing.city]
+                self.assertEqual(listing.photos, gallery_photos(listing.city))
+                self.assertEqual(len(listing.photos), 5)
+                sources.append(gallery['source'])
+                urls.extend(listing.photos)
+                hashes.extend(p['sha256'] for p in gallery['photos'])
+        self.assertEqual(len(set(sources)), 12)
+        self.assertEqual(len(set(urls)), 60)
+        self.assertEqual(len(set(hashes)), 60)
+
+    def test_single_cover_upgrade_preserves_custom_gallery(self):
+        custom = [f'https://example.com/my-home-{i}.jpg' for i in range(5)]
+        with self.sessions.begin() as db:
+            for row in db.scalars(select(Listing)):
+                row.photos = [photo_url(COVER_PHOTOS[row.city])]
+            db.get(Listing, 1).photos = custom
+        for _ in range(2):
+            with patch('seed.engine', self.engine), patch('seed.SessionLocal', self.sessions):
+                seed(date.today())
+        with self.sessions() as db:
+            self.assertEqual(db.get(Listing, 1).photos, custom)
+            for row in db.scalars(select(Listing).where(Listing.id != 1)):
+                self.assertEqual(row.photos, gallery_photos(row.city))
 
     def test_photo_edits_are_scoped_to_one_listing(self):
         before = self.client.get('/api/listings/2').json()['photos']

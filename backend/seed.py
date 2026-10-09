@@ -5,6 +5,7 @@ from sqlalchemy import func, select
 from app.database import Base, engine, SessionLocal
 from app.models import User, Listing, Booking, Review, Wishlist, Role, Category
 from app.schemas import ListingCreate
+from app.demo_photos import gallery_photos
 
 LEGACY_PHOTOS = [
     'photo-1613490493576-7fde63acd811', 'photo-1600210492486-724fe5c67fb0',
@@ -28,8 +29,7 @@ PROPERTIES = [
     ('Ocean-view escape with infinity pool', 'Koh Samui', 'Thailand', 9.5120, 100.0136, Category.POOLS, 28900, 'Villa', 'An elevated island escape with broad sea views and a private swimming pool. Share meals outdoors and enjoy spacious bedrooms cooled by air conditioning.'),
 ]
 
-# Explicit cover assignments. Only one illustrative photo is available per demo
-# home: never fill a gallery with unrelated properties to meet a photo count.
+# Historical single-cover assignments, retained only to migrate existing demos.
 COVER_PHOTOS = {
     'Malibu': 'photo-1613490493576-7fde63acd811',
     'Big Bear Lake': 'photo-1449844908441-8829872d2607',
@@ -66,9 +66,9 @@ def repair_legacy_photos(db):
             Listing.address == f'{i + 10} Example Lane (demo address)',
             User.email == ('sofia@example.com' if i % 2 == 0 else 'arjun@example.com')))
         for listing in rows:
-            if listing.photos == original or (city in DUPLICATE_COVERS and
+            if listing.photos in (original, [photo_url(COVER_PHOTOS[city])]) or (city in DUPLICATE_COVERS and
                     listing.photos == [photo_url(DUPLICATE_COVERS[city])]):
-                listing.photos = [photo_url(COVER_PHOTOS[city])]
+                listing.photos = gallery_photos(city)
                 repaired += 1
     return repaired
 
@@ -102,7 +102,7 @@ def seed(today: date):
                 address=f'{i + 10} Example Lane (demo address)', latitude=lat, longitude=lon,
                 category=category, property_type=kind, max_guests=4 + i % 3, bedrooms=2 + i % 2,
                 beds=3 + i % 2, bathrooms=2, nightly_rate_cents=rate, cleaning_fee_cents=4500,
-                service_fee_cents=3200, photos=[photo_url(COVER_PHOTOS[city])],
+                service_fee_cents=3200, photos=gallery_photos(city),
                 amenities=amenities, house_rules=['Check-in after 3 PM', 'Check-out before 11 AM', 'No smoking', 'No parties'])
             listing = Listing(host_id=users[i % 2].id, **data.model_dump(mode='json'))
             db.add(listing)
