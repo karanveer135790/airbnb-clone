@@ -77,7 +77,7 @@ or payment system; do not put real guest information into it.
 
 ## Validation status
 
-The application passed its TypeScript/production webpack build, 13 backend tests,
+The application passed its TypeScript/production webpack build, 19 backend tests,
 six calendar tests, and HTTP integration checks before this packaging step.
 Both Docker images built and deployed successfully on Railway; no local Docker daemon/CLI is available.
 Visual QA remains unverified because Chromium crashes at launch in this sandbox.

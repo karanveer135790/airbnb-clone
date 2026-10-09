@@ -346,7 +346,7 @@ boundary dates, occupied nights, maximum stay length, date validity and DST.
 
 Validation record for the delivered checkpoint:
 
-- 13 backend tests and six calendar tests.
+- 19 backend tests and six calendar tests.
 - TypeScript and optimized webpack production build.
 - HTTP smoke checks through the built Next.js proxy for host CRUD/reservations,
   guest trips, booking/cancellation persistence and dynamic page routes.
