@@ -10,8 +10,8 @@ from sqlalchemy import create_engine, event, select
 from sqlalchemy.orm import sessionmaker
 from app.database import get_db, configure_sqlite
 from app.main import app
-from app.models import Booking, Review
-from seed import seed
+from app.models import Booking, Review, Listing
+from seed import seed, LEGACY_PHOTOS, COVER_PHOTOS, photo_url
 
 class APITests(unittest.TestCase):
     def setUp(self):
@@ -41,6 +41,29 @@ class APITests(unittest.TestCase):
 
     def book(self, data=None, user=3):
         return self.client.post('/api/bookings', json=data or self.payload(), headers={'X-User-ID': str(user)})
+
+    def test_legacy_gallery_repair_preserves_custom_photos_and_bookings(self):
+        with self.sessions.begin() as db:
+            db.get(Listing, 6).photos = [photo_url(LEGACY_PHOTOS[(5+j) % len(LEGACY_PHOTOS)]) for j in range(5)]
+            custom = ['https://example.com/host-photo.jpg']
+            db.get(Listing, 1).photos = custom
+            before = [(b.id, b.listing_id, b.total_cents) for b in db.scalars(select(Booking))]
+        for _ in range(2):
+            with patch('seed.engine', self.engine), patch('seed.SessionLocal', self.sessions):
+                seed(date.today())
+        with self.sessions() as db:
+            self.assertEqual(db.get(Listing, 6).photos, [photo_url(COVER_PHOTOS['Ubud'])])
+            self.assertEqual(db.get(Listing, 1).photos, custom)
+            self.assertEqual([(b.id, b.listing_id, b.total_cents) for b in db.scalars(select(Booking))], before)
+
+    def test_photo_edits_are_scoped_to_one_listing(self):
+        before = self.client.get('/api/listings/2').json()['photos']
+        photos = ['https://example.com/my-property.jpg']
+        response = self.client.patch('/api/listings/1', json={'photos': photos}, headers={'X-User-ID': '1'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['photos'], photos)
+        self.assertEqual(self.client.get('/api/listings/2').json()['photos'], before)
+        self.assertEqual(self.client.patch('/api/listings/1', json={'photos': []}, headers={'X-User-ID': '1'}).status_code, 422)
 
     def test_overlap_variants_and_adjacent_stays(self):
         self.assertEqual(self.book().status_code, 201)

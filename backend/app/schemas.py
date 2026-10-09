@@ -40,7 +40,7 @@ class ListingCreate(Contract):
     cleaning_fee_cents: Money = 0
     service_fee_cents: Money = 0
     currency: str = Field(default='USD', pattern='^USD$')
-    photos: list[HttpUrl] = Field(min_length=5, max_length=30)
+    photos: list[HttpUrl] = Field(min_length=1, max_length=30)
     amenities: list[Annotated[str, Field(min_length=1, max_length=80)]] = Field(min_length=1, max_length=50)
     house_rules: list[Annotated[str, Field(min_length=1, max_length=300)]] = Field(default_factory=list, max_length=20)
 

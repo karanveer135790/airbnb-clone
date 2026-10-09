@@ -67,6 +67,7 @@ export function ListingCard({
         >
           <Heart size={25} fill={saved ? "#ff385c" : "rgba(0,0,0,.45)"} />
         </button>
+        {listing.photos.length > 1 && <>
         <button
           className="photo-arrow previous"
           aria-label={`Previous photo of ${listing.title}`}
@@ -86,6 +87,7 @@ export function ListingCard({
             <span key={i} className={i === photo ? "active" : ""} />
           ))}
         </div>
+        </>}
       </div>
       <div className="card-title">
         <button onClick={() => onOpen(listing)}>

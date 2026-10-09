@@ -394,6 +394,9 @@ SQLite is stored on a persistent backend volume. See `docs/DEPLOYMENT.md` for co
 - Payments, messaging, identity verification, Experiences, support and reporting are
   placeholders. No real card data or money is processed.
 - Photos use supplied URLs; there is no image-upload/cloud-storage integration.
+  Demo homes have one explicitly assigned illustrative cover; galleries never borrow
+  unrelated images to fill slots. Hosts can supply 1–30 photos of their own property.
+  Startup repairs only exact legacy seed galleries and preserves host-edited photos.
 - Listing maps use a fixed OpenStreetMap raster-tile viewport with attribution and
   an error fallback, not live-price pins. Explore's map button is a destination
   shortcut placeholder. Tile policy: https://operations.osmfoundation.org/policies/tiles/.

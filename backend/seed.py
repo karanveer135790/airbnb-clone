@@ -6,7 +6,7 @@ from app.database import Base, engine, SessionLocal
 from app.models import User, Listing, Booking, Review, Wishlist, Role, Category
 from app.schemas import ListingCreate
 
-PHOTOS = [
+LEGACY_PHOTOS = [
     'photo-1613490493576-7fde63acd811', 'photo-1600210492486-724fe5c67fb0',
     'photo-1600607687939-ce8a6c25118c', 'photo-1600566753086-00f18fb6b3ea',
     'photo-1600047509807-ba8f99d2cdde', 'photo-1518780664697-55e3ad937233',
@@ -28,13 +28,49 @@ PROPERTIES = [
     ('Ocean-view escape with infinity pool', 'Koh Samui', 'Thailand', 9.5120, 100.0136, Category.POOLS, 28900, 'Villa', 'An elevated island escape with broad sea views and a private swimming pool. Share meals outdoors and enjoy spacious bedrooms cooled by air conditioning.'),
 ]
 
+# Explicit cover assignments. Only one illustrative photo is available per demo
+# home: never fill a gallery with unrelated properties to meet a photo count.
+COVER_PHOTOS = {
+    'Malibu': 'photo-1613490493576-7fde63acd811',
+    'Big Bear Lake': 'photo-1449844908441-8829872d2607',
+    'Lisbon': 'photo-1600210492486-724fe5c67fb0',
+    'Florence': 'photo-1600566753086-00f18fb6b3ea',
+    'Joshua Tree': 'photo-1600047509807-ba8f99d2cdde',
+    'Ubud': 'photo-1613490493576-7fde63acd811',
+    'Comporta': 'photo-1518780664697-55e3ad937233',
+    'Queenstown': 'photo-1449158743715-0a90ebb6d2d8',
+    'Kyoto': 'photo-1600607687939-ce8a6c25118c',
+    'Gordes': 'photo-1600566753086-00f18fb6b3ea',
+    'Palm Springs': 'photo-1600047509807-ba8f99d2cdde',
+    'Koh Samui': 'photo-1613490493576-7fde63acd811',
+}
+
+def photo_url(photo_id):
+    return f'https://images.unsplash.com/{photo_id}?auto=format&fit=crop&w=1600&q=85'
+
+def repair_legacy_photos(db):
+    """Repair exact original seed galleries only; preserve host edits and bookings."""
+    repaired = 0
+    for i, (title, city, country, *_) in enumerate(PROPERTIES):
+        original = [photo_url(LEGACY_PHOTOS[(i+j) % len(LEGACY_PHOTOS)]) for j in range(5)]
+        rows = db.scalars(select(Listing).join(User).where(
+            Listing.title == title, Listing.city == city, Listing.country == country,
+            Listing.address == f'{i + 10} Example Lane (demo address)',
+            User.email == ('sofia@example.com' if i % 2 == 0 else 'arjun@example.com')))
+        for listing in rows:
+            if listing.photos == original:
+                listing.photos = [photo_url(COVER_PHOTOS[city])]
+                repaired += 1
+    return repaired
+
 def seed(today: date):
     Base.metadata.create_all(engine)
     with SessionLocal.begin() as db:
         # Serialize seed writers before testing whether this is an empty database.
         db.connection().exec_driver_sql('BEGIN IMMEDIATE')
         if any(db.scalar(select(func.count()).select_from(model)) for model in (User, Listing, Booking, Review, Wishlist)):
-            print('Database contains data; nothing changed. Use a fresh DATABASE_URL to reseed.')
+            repaired = repair_legacy_photos(db)
+            print(f'Database preserved; repaired {repaired} legacy demo photo galleries.')
             return
         users = [User(name=name, email=email, role=role,
                       avatar_url=f'https://i.pravatar.cc/160?img={avatar}',
@@ -57,7 +93,7 @@ def seed(today: date):
                 address=f'{i + 10} Example Lane (demo address)', latitude=lat, longitude=lon,
                 category=category, property_type=kind, max_guests=4 + i % 3, bedrooms=2 + i % 2,
                 beds=3 + i % 2, bathrooms=2, nightly_rate_cents=rate, cleaning_fee_cents=4500,
-                service_fee_cents=3200, photos=[f'https://images.unsplash.com/{PHOTOS[(i+j)%len(PHOTOS)]}?auto=format&fit=crop&w=1600&q=85' for j in range(5)],
+                service_fee_cents=3200, photos=[photo_url(COVER_PHOTOS[city])],
                 amenities=amenities, house_rules=['Check-in after 3 PM', 'Check-out before 11 AM', 'No smoking', 'No parties'])
             listing = Listing(host_id=users[i % 2].id, **data.model_dump(mode='json'))
             db.add(listing)

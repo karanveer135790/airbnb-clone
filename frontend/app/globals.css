@@ -2931,3 +2931,13 @@ select {
     font-size: 14px;
   }
 }
+
+/* Small galleries display their own photos without unrelated filler images. */
+@media (min-width: 741px) {
+  .property-gallery.photos-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  .property-gallery.photos-1 .tile-0 { grid-row: auto; }
+  .property-gallery.photos-2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+  .property-gallery.photos-2 .tile-0 { grid-row: auto; }
+  .property-gallery.photos-3 { grid-template-columns: 2fr 1fr; }
+  .property-gallery.photos-4 .tile-1 { grid-column: span 2; }
+}

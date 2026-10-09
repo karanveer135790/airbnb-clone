@@ -44,7 +44,7 @@ export function Gallery({
     );
   return (
     <>
-      <section className="property-gallery" aria-label="Property photos">
+      <section className={`property-gallery photos-${Math.min(photos.length, 5)}`} aria-label="Property photos">
         {photos.slice(0, 5).map((src, i) => (
           <button
             key={src}
@@ -61,7 +61,7 @@ export function Gallery({
         ))}
         <button className="show-photos" onClick={() => setIndex(0)}>
           <Grid2X2 size={16} />
-          Show all photos
+          {photos.length === 1 ? "View photo" : "Show all photos"}
         </button>
       </section>
       {index !== null && (
@@ -91,6 +91,7 @@ export function Gallery({
             <div className="gallery-controls">
               <button
                 className="icon-button"
+                disabled={photos.length < 2}
                 aria-label="Previous photo"
                 onClick={() => change(-1)}
               >
@@ -101,6 +102,7 @@ export function Gallery({
               </p>
               <button
                 className="icon-button"
+                disabled={photos.length < 2}
                 aria-label="Next photo"
                 onClick={() => change(1)}
               >

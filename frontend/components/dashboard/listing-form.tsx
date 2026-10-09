@@ -62,8 +62,8 @@ export function ListingForm({
       const text = (key: string) => String(fields.get(key) || "").trim();
       const number = (key: string) => Number(text(key));
       const photos = lines(text("photos"));
-      if (photos.length < 5 || photos.length > 30)
-        throw Error("Add between 5 and 30 photo URLs.");
+      if (photos.length < 1 || photos.length > 30)
+        throw Error("Add between 1 and 30 photo URLs.");
       for (const photo of photos) {
         let url: URL;
         try {
@@ -345,7 +345,7 @@ export function ListingForm({
               />
             </label>
             <p className="muted">
-              Add 5–30 HTTP or HTTPS image URLs. The first is your cover photo.
+              Add 1–30 photo URLs of this property only. The first is your cover photo.
             </p>
           </section>
           <section>

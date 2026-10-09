@@ -99,5 +99,5 @@ were checked without Docker; this is not a substitute for a container build/run.
 - Backend start command: `sh -c 'python seed.py && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1'`.
 - Backend volume: 500 MB mounted at `/data`; `DATABASE_URL=sqlite:////data/airbnb.db`.
 - `RAILWAY_RUN_UID=0` on the backend permits writing the root-owned Railway volume.
-- Seeding only runs on an empty database; subsequent starts preserve existing data.
+- Seeding creates demo data only on an empty database. Subsequent starts repair exact original mixed-photo galleries; host-edited photos and bookings are preserved.
 - Both services track the GitHub `main` branch. The backend uses private networking.
