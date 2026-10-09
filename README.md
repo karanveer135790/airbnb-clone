@@ -381,7 +381,11 @@ and the intended frontend/backend origin when hosting.
 
 Repository: https://github.com/karanveer135790/airbnb-clone
 
-A live hosted demo has not yet been deployed.
+Live demo: https://frontend-production-a014e.up.railway.app
+
+Both Railway Docker services reached `SUCCESS`. Live HTTP checks passed for home,
+listing details, trips, hosting, seeded users/listings, availability, and reservations.
+SQLite is stored on a persistent backend volume. See `docs/DEPLOYMENT.md` for configuration.
 
 ## 9. Assumptions and placeholders
 

@@ -55,7 +55,7 @@ The next connected-provider workflow is:
 Provider configuration and billing are not assumed or created by these files.
 Actual deployment requires an authenticated account, a selected project, and a
 persistent-volume-capable service. GitHub and Railway integrations are connected.
-No hosted URL has been created yet.
+Live demo: https://frontend-production-a014e.up.railway.app
 
 This assignment deliberately uses mock identity selection. A public demo lets
 visitors act as seeded users and modify demo data. It is not a production account
@@ -78,11 +78,26 @@ or payment system; do not put real guest information into it.
 
 The application passed its TypeScript/production webpack build, 13 backend tests,
 six calendar tests, and HTTP integration checks before this packaging step.
-Docker execution remains unverified because no Docker daemon/CLI is available.
+Both Docker images built and deployed successfully on Railway; no local Docker daemon/CLI is available.
 Visual QA remains unverified because Chromium crashes at launch in this sandbox.
-No pixel-perfect or live-deployment claim is made.
+Pixel-perfect equivalence remains uncertified. Both Railway services reached terminal `SUCCESS`.
+Live HTTP checks passed for home, listing detail, trips, hosting, listings, users,
+availability, guest trips, and host reservations. The seed remained intact across backend restarts.
 
 Additional packaging checks passed: standalone production build and TypeScript,
 standalone server startup, home/hosting/trips routes, favicon delivery, and the API
 proxy returning seeded listings. Compose YAML structure and the named-volume wiring
 were checked without Docker; this is not a substitute for a container build/run.
+
+
+## Railway configuration
+
+- Project: `airbnb-clone`; environment: `production`.
+- Frontend: `/frontend` build root, `Dockerfile`, port `3000`, health check `/`.
+- Frontend build/runtime `API_ORIGIN`: `http://backend.railway.internal:8000`.
+- Backend: `/backend` build root, `Dockerfile`, port `8000`, health check `/health`.
+- Backend start command: `sh -c 'python seed.py && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1'`.
+- Backend volume: 500 MB mounted at `/data`; `DATABASE_URL=sqlite:////data/airbnb.db`.
+- `RAILWAY_RUN_UID=0` on the backend permits writing the root-owned Railway volume.
+- Seeding only runs on an empty database; subsequent starts preserve existing data.
+- Both services track the GitHub `main` branch. The backend uses private networking.
