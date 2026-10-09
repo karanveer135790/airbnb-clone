@@ -5,7 +5,7 @@ from sqlalchemy import func, select
 from app.database import Base, engine, SessionLocal
 from app.models import User, Listing, Booking, Review, Wishlist, Role, Category
 from app.schemas import ListingCreate
-from app.demo_photos import gallery_photos
+from app.demo_photos import GALLERIES, gallery_photos
 
 LEGACY_PHOTOS = [
     'photo-1613490493576-7fde63acd811', 'photo-1600210492486-724fe5c67fb0',
@@ -66,7 +66,7 @@ def repair_legacy_photos(db):
             Listing.address == f'{i + 10} Example Lane (demo address)',
             User.email == ('sofia@example.com' if i % 2 == 0 else 'arjun@example.com')))
         for listing in rows:
-            if listing.photos in (original, [photo_url(COVER_PHOTOS[city])]) or (city in DUPLICATE_COVERS and
+            if listing.photos in (original, [photo_url(COVER_PHOTOS[city])], GALLERIES[city].get('previous_photos')) or (city in DUPLICATE_COVERS and
                     listing.photos == [photo_url(DUPLICATE_COVERS[city])]):
                 listing.photos = gallery_photos(city)
                 repaired += 1

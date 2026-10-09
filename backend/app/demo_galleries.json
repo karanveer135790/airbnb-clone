@@ -133,39 +133,6 @@
     ]
   },
   "Joshua Tree": {
-    "source": "https://www.archdaily.com/1012085/the-landing-house-industry-of-all-nations",
-    "credits": [
-      "© Ye Rin Mok"
-    ],
-    "photos": [
-      {
-        "url": "https://images.adsttc.com/media/images/659f/1b68/e32f/dc14/da46/60a1/large_jpg/the-landing-house-industry-of-all-nations_2.jpg?1704926065",
-        "caption": "The Landing House / Industry of All Nations - Exterior Photography, Windows",
-        "sha256": "65233c9c58bd6d8bb4bae11e29b47b68d7a147cf929d1f2f13cf6205ef9b1b95"
-      },
-      {
-        "url": "https://images.adsttc.com/media/images/659f/1b70/9936/3f32/4ec1/6080/large_jpg/the-landing-house-industry-of-all-nations_19.jpg?1704926071",
-        "caption": "The Landing House / Industry of All Nations - Exterior Photography, Windows",
-        "sha256": "e939e62dfa1a1da8290220bde1e98230e2f8d6782ec878284f2141d11eb6fefd"
-      },
-      {
-        "url": "https://images.adsttc.com/media/images/659f/1b6c/9936/3f32/4ec1/607b/large_jpg/the-landing-house-industry-of-all-nations_14.jpg?1704926069",
-        "caption": "The Landing House / Industry of All Nations - Interior Photography, Windows, Facade, Beam",
-        "sha256": "daa23f227dae8620365f56d61f76ef9532e4a6ea28dbad8bd636a30d21c96600"
-      },
-      {
-        "url": "https://images.adsttc.com/media/images/659f/1b67/9936/3f32/4ec1/6074/large_jpg/the-landing-house-industry-of-all-nations_3.jpg?1704926064",
-        "caption": "The Landing House / Industry of All Nations - Interior Photography, Living Room, Bedroom",
-        "sha256": "b4a200385110ed5e2e2a332231438968194e4c34e5aa110c9a51120d6b6c6be6"
-      },
-      {
-        "url": "https://images.adsttc.com/media/images/659f/1b66/e32f/dc01/7c6b/61db/large_jpg/the-landing-house-industry-of-all-nations_8.jpg?1704926068",
-        "caption": "The Landing House / Industry of All Nations - Interior Photography, Living Room, Table, Chair, Beam, Bedroom",
-        "sha256": "41359a904ea41011f1ba82fdab055ec6d70f90b6461a7d3a3babf11fd6f576bd"
-      }
-    ]
-  },
-  "Ubud": {
     "source": "https://www.archdaily.com/1004192/oberoi-villa-arkana-architects",
     "credits": [
       "© Indra Wiras"
@@ -196,6 +163,53 @@
         "caption": "Oberoi Villa / Arkana Architects - Interior Photography, Bedroom, Beam",
         "sha256": "4bb06c359827d144330ac8e263f42e33afec2f8b4d534061d501db6d7485df21"
       }
+    ],
+    "previous_photos": [
+      "https://images.adsttc.com/media/images/659f/1b68/e32f/dc14/da46/60a1/large_jpg/the-landing-house-industry-of-all-nations_2.jpg?1704926065",
+      "https://images.adsttc.com/media/images/659f/1b70/9936/3f32/4ec1/6080/large_jpg/the-landing-house-industry-of-all-nations_19.jpg?1704926071",
+      "https://images.adsttc.com/media/images/659f/1b6c/9936/3f32/4ec1/607b/large_jpg/the-landing-house-industry-of-all-nations_14.jpg?1704926069",
+      "https://images.adsttc.com/media/images/659f/1b67/9936/3f32/4ec1/6074/large_jpg/the-landing-house-industry-of-all-nations_3.jpg?1704926064",
+      "https://images.adsttc.com/media/images/659f/1b66/e32f/dc01/7c6b/61db/large_jpg/the-landing-house-industry-of-all-nations_8.jpg?1704926068"
+    ]
+  },
+  "Ubud": {
+    "source": "https://www.archdaily.com/1012085/the-landing-house-industry-of-all-nations",
+    "credits": [
+      "© Ye Rin Mok"
+    ],
+    "photos": [
+      {
+        "url": "https://images.adsttc.com/media/images/659f/1b68/e32f/dc14/da46/60a1/large_jpg/the-landing-house-industry-of-all-nations_2.jpg?1704926065",
+        "caption": "The Landing House / Industry of All Nations - Exterior Photography, Windows",
+        "sha256": "65233c9c58bd6d8bb4bae11e29b47b68d7a147cf929d1f2f13cf6205ef9b1b95"
+      },
+      {
+        "url": "https://images.adsttc.com/media/images/659f/1b70/9936/3f32/4ec1/6080/large_jpg/the-landing-house-industry-of-all-nations_19.jpg?1704926071",
+        "caption": "The Landing House / Industry of All Nations - Exterior Photography, Windows",
+        "sha256": "e939e62dfa1a1da8290220bde1e98230e2f8d6782ec878284f2141d11eb6fefd"
+      },
+      {
+        "url": "https://images.adsttc.com/media/images/659f/1b6c/9936/3f32/4ec1/607b/large_jpg/the-landing-house-industry-of-all-nations_14.jpg?1704926069",
+        "caption": "The Landing House / Industry of All Nations - Interior Photography, Windows, Facade, Beam",
+        "sha256": "daa23f227dae8620365f56d61f76ef9532e4a6ea28dbad8bd636a30d21c96600"
+      },
+      {
+        "url": "https://images.adsttc.com/media/images/659f/1b67/9936/3f32/4ec1/6074/large_jpg/the-landing-house-industry-of-all-nations_3.jpg?1704926064",
+        "caption": "The Landing House / Industry of All Nations - Interior Photography, Living Room, Bedroom",
+        "sha256": "b4a200385110ed5e2e2a332231438968194e4c34e5aa110c9a51120d6b6c6be6"
+      },
+      {
+        "url": "https://images.adsttc.com/media/images/659f/1b66/e32f/dc01/7c6b/61db/large_jpg/the-landing-house-industry-of-all-nations_8.jpg?1704926068",
+        "caption": "The Landing House / Industry of All Nations - Interior Photography, Living Room, Table, Chair, Beam, Bedroom",
+        "sha256": "41359a904ea41011f1ba82fdab055ec6d70f90b6461a7d3a3babf11fd6f576bd"
+      }
+    ],
+    "previous_photos": [
+      "https://images.adsttc.com/media/images/64b6/6d4f/cb9c/4614/f0a9/1a2f/large_jpg/oberoi-villa-arkana-architects_8.jpg?1689677149",
+      "https://images.adsttc.com/media/images/64b6/790d/cb9c/4614/f0a9/1a6d/large_jpg/oberoi-villa-arkana-architects_23.jpg?1689680157",
+      "https://images.adsttc.com/media/images/64b6/797e/5921/185d/d3ec/d41d/large_jpg/oberoi-villa-arkana-architects_19.jpg?1689680285",
+      "https://images.adsttc.com/media/images/64b6/7930/5921/185d/d3ec/d40f/large_jpg/oberoi-villa-arkana-architects_18.jpg?1689680190",
+      "https://images.adsttc.com/media/images/64b6/7959/5921/185d/d3ec/d41c/large_jpg/oberoi-villa-arkana-architects_24.jpg?1689680231"
     ]
   },
   "Comporta": {
@@ -331,39 +345,6 @@
     ]
   },
   "Palm Springs": {
-    "source": "https://www.archdaily.com/893407/palm-springs-residence-jim-jennings-architecture-plus-lineoffice-architecture-plus-martha-angus-interior-design",
-    "credits": [
-      "© Lance Gerber"
-    ],
-    "photos": [
-      {
-        "url": "https://images.adsttc.com/media/images/5ae2/9c81/f197/cccc/c100/03ee/large_jpg/Back_1.jpg?1524800633",
-        "caption": "Palm Springs Residence / Jim Jennings Architecture + LINEOFFICE Architecture + Martha Angus Interior Design - Door, Facade, Chair, Patio, Courtyard",
-        "sha256": "96e4f01874547a8ad96328aa8bd33c0571d2b611514a070bcca5ad092b6d1694"
-      },
-      {
-        "url": "https://images.adsttc.com/media/images/5ae2/9d03/f197/cccc/c100/03f4/large_jpg/Living_1.jpg?1524800763",
-        "caption": "Palm Springs Residence / Jim Jennings Architecture + LINEOFFICE Architecture + Martha Angus Interior Design - Sofa",
-        "sha256": "96af622785d72676bea0ebf60770490ba5ca45b423e1c1df37c3f884c209ea60"
-      },
-      {
-        "url": "https://images.adsttc.com/media/images/5ae2/9ce1/f197/ccfe/da00/0228/large_jpg/Front_3.jpg?1524800730",
-        "caption": "Palm Springs Residence / Jim Jennings Architecture + LINEOFFICE Architecture + Martha Angus Interior Design - Facade",
-        "sha256": "15aa66e5517d5c34db6a729ee39a84251b5d13ccea2d997fe741f85db32cbb86"
-      },
-      {
-        "url": "https://images.adsttc.com/media/images/5ae2/9ceb/f197/cccc/c100/03f3/large_jpg/Front_4.jpg?1524800738",
-        "caption": "Palm Springs Residence / Jim Jennings Architecture + LINEOFFICE Architecture + Martha Angus Interior Design - Windows, Facade",
-        "sha256": "c240b0fd85198769089e20e488731c6876d7fbf644a2ddfad5a6c09106eebac9"
-      },
-      {
-        "url": "https://images.adsttc.com/media/images/5ae2/9ccb/f197/ccfe/da00/0227/large_jpg/Back_6.jpg?1524800707",
-        "caption": "Palm Springs Residence / Jim Jennings Architecture + LINEOFFICE Architecture + Martha Angus Interior Design - Door, Facade",
-        "sha256": "3fa500ac4ee575a46315f54f4081be2a4d5d6453bd95d81771e051ce85a649b2"
-      }
-    ]
-  },
-  "Koh Samui": {
     "source": "https://www.archdaily.com/489335/the-naked-house-marc-gerritsen",
     "credits": [
       "© Marc Gerritsen"
@@ -394,6 +375,53 @@
         "caption": "The Naked House / Marc Gerritsen - Beam",
         "sha256": "58197a26a92f1a656588690de48e07d988f7815e89475c6a845a55e58cf87b3f"
       }
+    ],
+    "previous_photos": [
+      "https://images.adsttc.com/media/images/5ae2/9c81/f197/cccc/c100/03ee/large_jpg/Back_1.jpg?1524800633",
+      "https://images.adsttc.com/media/images/5ae2/9d03/f197/cccc/c100/03f4/large_jpg/Living_1.jpg?1524800763",
+      "https://images.adsttc.com/media/images/5ae2/9ce1/f197/ccfe/da00/0228/large_jpg/Front_3.jpg?1524800730",
+      "https://images.adsttc.com/media/images/5ae2/9ceb/f197/cccc/c100/03f3/large_jpg/Front_4.jpg?1524800738",
+      "https://images.adsttc.com/media/images/5ae2/9ccb/f197/ccfe/da00/0227/large_jpg/Back_6.jpg?1524800707"
+    ]
+  },
+  "Koh Samui": {
+    "source": "https://www.archdaily.com/893407/palm-springs-residence-jim-jennings-architecture-plus-lineoffice-architecture-plus-martha-angus-interior-design",
+    "credits": [
+      "© Lance Gerber"
+    ],
+    "photos": [
+      {
+        "url": "https://images.adsttc.com/media/images/5ae2/9c81/f197/cccc/c100/03ee/large_jpg/Back_1.jpg?1524800633",
+        "caption": "Palm Springs Residence / Jim Jennings Architecture + LINEOFFICE Architecture + Martha Angus Interior Design - Door, Facade, Chair, Patio, Courtyard",
+        "sha256": "96e4f01874547a8ad96328aa8bd33c0571d2b611514a070bcca5ad092b6d1694"
+      },
+      {
+        "url": "https://images.adsttc.com/media/images/5ae2/9d03/f197/cccc/c100/03f4/large_jpg/Living_1.jpg?1524800763",
+        "caption": "Palm Springs Residence / Jim Jennings Architecture + LINEOFFICE Architecture + Martha Angus Interior Design - Sofa",
+        "sha256": "96af622785d72676bea0ebf60770490ba5ca45b423e1c1df37c3f884c209ea60"
+      },
+      {
+        "url": "https://images.adsttc.com/media/images/5ae2/9ce1/f197/ccfe/da00/0228/large_jpg/Front_3.jpg?1524800730",
+        "caption": "Palm Springs Residence / Jim Jennings Architecture + LINEOFFICE Architecture + Martha Angus Interior Design - Facade",
+        "sha256": "15aa66e5517d5c34db6a729ee39a84251b5d13ccea2d997fe741f85db32cbb86"
+      },
+      {
+        "url": "https://images.adsttc.com/media/images/5ae2/9ceb/f197/cccc/c100/03f3/large_jpg/Front_4.jpg?1524800738",
+        "caption": "Palm Springs Residence / Jim Jennings Architecture + LINEOFFICE Architecture + Martha Angus Interior Design - Windows, Facade",
+        "sha256": "c240b0fd85198769089e20e488731c6876d7fbf644a2ddfad5a6c09106eebac9"
+      },
+      {
+        "url": "https://images.adsttc.com/media/images/5ae2/9ccb/f197/ccfe/da00/0227/large_jpg/Back_6.jpg?1524800707",
+        "caption": "Palm Springs Residence / Jim Jennings Architecture + LINEOFFICE Architecture + Martha Angus Interior Design - Door, Facade",
+        "sha256": "3fa500ac4ee575a46315f54f4081be2a4d5d6453bd95d81771e051ce85a649b2"
+      }
+    ],
+    "previous_photos": [
+      "https://images.adsttc.com/media/images/5330/b577/c07a/80f4/c600/0021/large_jpg/_MG82706.jpg?1395701091",
+      "https://images.adsttc.com/media/images/5330/b592/c07a/80f4/c600/0022/large_jpg/_MG82711.jpg?1395701117",
+      "https://images.adsttc.com/media/images/5330/b5a7/c07a/8056/8000/0022/large_jpg/_MG82751-2.jpg?1395701138",
+      "https://images.adsttc.com/media/images/5330/b559/c07a/80d6/4200/0011/large_jpg/_MG82624.jpg?1395701060",
+      "https://images.adsttc.com/media/images/5330/b5ac/c07a/80f4/c600/0023/large_jpg/_MG82856.jpg?1395701144"
     ]
   }
 }

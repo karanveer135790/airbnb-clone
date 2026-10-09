@@ -106,6 +106,23 @@ class APITests(unittest.TestCase):
             for row in db.scalars(select(Listing).where(Listing.id != 1)):
                 self.assertEqual(row.photos, gallery_photos(row.city))
 
+    def test_category_gallery_swap_is_repeatable_and_preserves_host_edits(self):
+        custom = ['https://example.com/my-custom-gallery.jpg']
+        with self.sessions.begin() as db:
+            for listing in db.scalars(select(Listing)):
+                if 'previous_photos' in GALLERIES[listing.city]:
+                    listing.photos = GALLERIES[listing.city]['previous_photos']
+            db.get(Listing, 6).photos = custom
+            before = [(b.id, b.listing_id, b.total_cents) for b in db.scalars(select(Booking))]
+        for _ in range(2):
+            with patch('seed.engine', self.engine), patch('seed.SessionLocal', self.sessions):
+                seed(date.today())
+        with self.sessions() as db:
+            self.assertEqual(db.get(Listing, 6).photos, custom)
+            for listing in db.scalars(select(Listing).where(Listing.id != 6)):
+                self.assertEqual(listing.photos, gallery_photos(listing.city))
+            self.assertEqual([(b.id, b.listing_id, b.total_cents) for b in db.scalars(select(Booking))], before)
+
     def test_photo_edits_are_scoped_to_one_listing(self):
         before = self.client.get('/api/listings/2').json()['photos']
         photos = ['https://example.com/my-property.jpg']
