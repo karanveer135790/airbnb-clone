@@ -11,7 +11,7 @@ from sqlalchemy.orm import sessionmaker
 from app.database import get_db, configure_sqlite
 from app.main import app
 from app.models import Booking, Review, Listing
-from seed import seed, LEGACY_PHOTOS, COVER_PHOTOS, photo_url
+from seed import seed, LEGACY_PHOTOS, COVER_PHOTOS, DUPLICATE_COVERS, photo_url
 
 class APITests(unittest.TestCase):
     def setUp(self):
@@ -55,6 +55,27 @@ class APITests(unittest.TestCase):
             self.assertEqual(db.get(Listing, 6).photos, [photo_url(COVER_PHOTOS['Ubud'])])
             self.assertEqual(db.get(Listing, 1).photos, custom)
             self.assertEqual([(b.id, b.listing_id, b.total_cents) for b in db.scalars(select(Booking))], before)
+
+    def test_duplicate_covers_are_repaired_without_reseeding(self):
+        with self.sessions.begin() as db:
+            for row in db.scalars(select(Listing)):
+                if row.city in DUPLICATE_COVERS:
+                    row.photos = [photo_url(DUPLICATE_COVERS[row.city])]
+            before = [(b.id, b.listing_id, b.total_cents) for b in db.scalars(select(Booking))]
+        for _ in range(2):
+            with patch('seed.engine', self.engine), patch('seed.SessionLocal', self.sessions):
+                seed(date.today())
+        with self.sessions() as db:
+            photos = [row.photos[0] for row in db.scalars(select(Listing))]
+            self.assertEqual(len(photos), 12)
+            self.assertEqual(len(set(photos)), 12)
+            self.assertEqual([(b.id, b.listing_id, b.total_cents) for b in db.scalars(select(Booking))], before)
+
+    def test_new_seed_covers_are_unique(self):
+        self.assertEqual(len(COVER_PHOTOS), len(set(COVER_PHOTOS.values())))
+        with self.sessions() as db:
+            photos = [row.photos[0] for row in db.scalars(select(Listing))]
+            self.assertEqual(len(photos), len(set(photos)))
 
     def test_photo_edits_are_scoped_to_one_listing(self):
         before = self.client.get('/api/listings/2').json()['photos']

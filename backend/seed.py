@@ -36,20 +36,28 @@ COVER_PHOTOS = {
     'Lisbon': 'photo-1600210492486-724fe5c67fb0',
     'Florence': 'photo-1600566753086-00f18fb6b3ea',
     'Joshua Tree': 'photo-1600047509807-ba8f99d2cdde',
-    'Ubud': 'photo-1613490493576-7fde63acd811',
+    'Ubud': 'photo-1564013799919-ab600027ffc6',
     'Comporta': 'photo-1518780664697-55e3ad937233',
     'Queenstown': 'photo-1449158743715-0a90ebb6d2d8',
     'Kyoto': 'photo-1600607687939-ce8a6c25118c',
+    'Gordes': 'photo-1600607687920-4e2a09cf159d',
+    'Palm Springs': 'photo-1600596542815-ffad4c1539a9',
+    'Koh Samui': 'photo-1613977257363-707ba9348227',
+}
+
+# Previous single-photo assignments, retained only for a narrow data migration.
+DUPLICATE_COVERS = {
+    'Ubud': 'photo-1613490493576-7fde63acd811',
+    'Koh Samui': 'photo-1613490493576-7fde63acd811',
     'Gordes': 'photo-1600566753086-00f18fb6b3ea',
     'Palm Springs': 'photo-1600047509807-ba8f99d2cdde',
-    'Koh Samui': 'photo-1613490493576-7fde63acd811',
 }
 
 def photo_url(photo_id):
     return f'https://images.unsplash.com/{photo_id}?auto=format&fit=crop&w=1600&q=85'
 
 def repair_legacy_photos(db):
-    """Repair exact original seed galleries only; preserve host edits and bookings."""
+    """Repair exact former seed photos only; preserve host edits and bookings."""
     repaired = 0
     for i, (title, city, country, *_) in enumerate(PROPERTIES):
         original = [photo_url(LEGACY_PHOTOS[(i+j) % len(LEGACY_PHOTOS)]) for j in range(5)]
@@ -58,7 +66,8 @@ def repair_legacy_photos(db):
             Listing.address == f'{i + 10} Example Lane (demo address)',
             User.email == ('sofia@example.com' if i % 2 == 0 else 'arjun@example.com')))
         for listing in rows:
-            if listing.photos == original:
+            if listing.photos == original or (city in DUPLICATE_COVERS and
+                    listing.photos == [photo_url(DUPLICATE_COVERS[city])]):
                 listing.photos = [photo_url(COVER_PHOTOS[city])]
                 repaired += 1
     return repaired
